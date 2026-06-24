@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Sewa Tenda Camping Labusel (TCL)</title>
+    
+    <!-- PANGGILAN FONTS UTAMA -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* RESET DASAR */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #FDFBF7;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: #2D2424;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* NAVBAR ATAS */
+        .navbar {
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 16px 40px; 
+            background: #3D0C13; 
+            color: white;
+            width: 100%;
+            font-size: 14px;
+            letter-spacing: 0.3px;
+        }
+
+        /* BINGKAI UTAMA UNTUK MENGUNCI TOTAL LAYOUT */
+        .halaman-penuh-wrapper {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px 40px 40px;
+        }
+
+        /* HEADER BRANDING ATAS */
+        .header-profil-sentral {
+            text-align: center;
+            padding: 35px 0 25px 0;
+            width: 100%;
+        }
+
+        .header-profil-sentral img {
+            width: 115px;
+            height: 115px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3.5px solid #3D0C13;
+            margin-bottom: 15px;
+            background-color: #fff;
+            box-shadow: 0 10px 25px rgba(61, 12, 19, 0.12);
+        }
+
+        .header-profil-sentral h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: #3D0C13;
+            margin-bottom: 6px;
+            letter-spacing: -0.5px;
+            text-transform: uppercase;
+        }
+
+        .header-profil-sentral .motto-text {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 14px;
+            color: #6E5D5D;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        /* SYSTEM GRID KAKU DAN MANTEP */
+        .main-workspace-grid {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 40px;
+            width: 100%;
+            align-items: start;
+        }
+
+        /* SIDEBAR TOMBOL */
+        .sidebar-gelembung {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 350px;
+        }
+
+        /* GAYA TOMBOL MENU TAB ELEGAN */
+        .tab-btn {
+            background: #FFFFFF;
+            color: #3D0C13;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            padding: 15px 24px;
+            border: 2px solid #3D0C13;
+            border-radius: 50px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 100%;
+            display: block;
+            letter-spacing: 0.2px;
+            box-shadow: 0 4px 12px rgba(61, 12, 19, 0.02);
+        }
+
+        .tab-btn:hover {
+            background: #F5EBE6;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(61, 12, 19, 0.06);
+        }
+
+        .tab-btn.active {
+            background: #3D0C13 !important;
+            color: #FFFFFF !important;
+            box-shadow: 0 8px 20px rgba(61, 12, 19, 0.22);
+        }
+
+        /* AREA KONTEN SEBELAH KANAN */
+        .konten-kanan {
+            background: #FFFFFF;
+            border-radius: 24px;
+            padding: 45px;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.03);
+            border: 1px solid #EFEAE2;
+            width: 100%;
+            min-height: 550px;
+        }
+
+        .tab-content h2 {
+            font-family: 'Playfair Display', serif;
+            color: #3D0C13;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 22px;
+            border-bottom: 2px solid #F5EBE6;
+            padding-bottom: 12px;
+        }
+
+        .tab-content p {
+            font-size: 14.5px;
+            line-height: 1.7;
+            color: #4A3F3F;
+        }
+
+        /* TATA LETAK KATALOG & KERANJANG */
+        .katalog-wrapper {
+            display: flex;
+            gap: 25px;
+            align-items: start;
+        }
+        
+        .katalog-main { flex: 1.4; }
+        
+        .kasir-side { 
+            flex: 1; 
+            background: #FFFDFB; 
+            border: 2px dashed #3D0C13; 
+            border-radius: 20px; 
+            padding: 24px; 
+            position: sticky;
+            top: 20px;
+        }
+
+        /* INPUT GRUP UNTUK TANGGAL RENTAL */
+        .grup-tanggal-rental {
+            background: #FDFBF7;
+            border: 1px solid #EFEAE2;
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 15px;
+        }
+
+        .grup-tanggal-rental label {
+            display: block;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #6E5D5D;
+            margin-bottom: 4px;
+        }
+
+        .grup-tanggal-rental input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #3D0C13;
+            border-radius: 8px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 13px;
+            margin-bottom: 10px;
+            color: #2D2424;
+        }
+
+        .grup-tanggal-rental input:last-child {
+            margin-bottom: 0;
+        }
+
+        .info-durasi-malam {
+            font-size: 13px;
+            font-weight: 700;
+            color: #3D0C13;
+            background: #F5EBE6;
+            padding: 8px 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .grid-produk {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 16px;
+        }
+
+        .card-produk {
+            border: 1px solid #EFEAE2; 
+            padding: 16px; 
+            border-radius: 18px; 
+            text-align: center;
+            background: #fff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.01);
+        }
+
+        .card-produk h4 {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: #3D0C13;
+        }
+
+        /* REKREASI KOTAK REKENING BANK */
+        .kotak-rekening-bri {
+            background: #FFFDF9;
+            border: 2px solid #3D0C13;
+            border-radius: 16px;
+            padding: 25px;
+            margin-top: 15px;
+            box-shadow: 0 6px 15px rgba(61,12,19,0.03);
+        }
+
+        /* TOMBOL MAROON */
+        .btn-maroon {
+            background: #3D0C13; 
+            color: white; 
+            border: none; 
+            padding: 11px 20px; 
+            border-radius: 25px; 
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+            letter-spacing: 0.3px;
+            transition: background 0.2s;
+        }
+
+        .btn-maroon:hover {
+            background: #5A1620;
+        }
+
+        .btn-maroon:disabled {
+            background: #cccccc;
+            color: #666666;
+            cursor: not-allowed;
+            border: none;
+        }
+
+        /* TABEL LOG */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        th, td { 
+            border: 1px solid #EFEAE2; 
+            padding: 15px 14px; 
+            text-align: left; 
+            font-size: 13.5px;
+            vertical-align: middle;
+        }
+        
+        th { 
+            background-color: #3D0C13; 
+            color: white; 
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR INFORMASI SESI -->
+    <div class="navbar">
+        <div style="font-weight: 700;">
+            Sesi Akun: <span id="userBadge" style="background: #FFFDF9; color: #3D0C13; padding: 4px 14px; border-radius: 20px; margin-left: 5px; font-weight: 700; font-size: 12px;"></span>
+        </div>
+        <a href="index.html" style="color: white; text-decoration: none; font-size: 13px; font-weight: 700; background: rgba(255,255,255,0.15); padding: 8px 18px; border-radius: 20px;">Keluar</a>
+    </div>
+
+    <div class="halaman-penuh-wrapper">
+
+        <!-- LOGO DAN MOTTO CENTRAL -->
+        <div class="header-profil-sentral">
+            <img src="images/logo.jpeg" onerror="this.src='logo.jpeg'" alt="Logo TCL">
+            <h1>Sewa Tenda Camping Labusel (TCL)</h1>
+            <div class="motto-text">"MENJELAJAH ALAM BEBAS BERSAMA KENYAMANAN"</div>
+        </div>
+
+        <!-- MAIN WORKSPACE GRID -->
+        <div class="main-workspace-grid">
+            
+            <!-- MENU SIDEBAR -->
+            <div class="sidebar-gelembung">
+                <button class="tab-btn active" onclick="openTab(event, 'tap1')" id="btn-tap1">Tap 1. Website Usaha</button>
+                <button class="tab-btn" onclick="openTab(event, 'tap2')">Tap 2. Linktree Pengelola</button>
+                <button class="tab-btn" onclick="openTab(event, 'tap3')">Tap 3. Media Sosial Bisnis</button>
+                <button class="tab-btn" onclick="openTab(event, 'tap4')">Tap 4. Media Komunikasi</button>
+                <button class="tab-btn" onclick="openTab(event, 'tap5')">Tap 5. Katalog & Pemesanan</button>
+                <button class="tab-btn" onclick="openTab(event, 'pesananku-tab')" id="btnMenuPesananku">Tap 5b. Pesanan Ku (User)</button>
+                <button class="tab-btn" onclick="openTab(event, 'tap6')">Tap 6. Dokumentasi Usaha (YouTube)</button>
+                <button class="tab-btn" onclick="openTab(event, 'tap7')">Tap 7. Pembayaran</button>
+                <button class="tab-btn" onclick="openTab(event, 'tap8')">Tap 8. Google Map Profil</button>
+                <button class="tab-btn" onclick="openTab(event, 'tap9')" id="btnMenuAdmin">Tap 9. Rekap dan Dokumentasi Pembelian</button>
+                <button class="tab-btn" onclick="openTab(event, 'tap10')">Tap 10. Kerjasama Usaha</button>
+                <button class="tab-btn" onclick="openTab(event, 'tap11')">Tap 11. Promosi Pemasaran</button>
+                <button class="tab-btn" onclick="openTab(event, 'tap12')">Tap 12. Aturan Usaha (Policy)</button>
+                <button class="tab-btn" onclick="openTab(event, 'tap13')">Tap 13. Pengiriman & E-Commerce</button>
+                <button class="tab-btn" onclick="openTab(event, 'tap14')">Tap 14. Pengelola dan Pemilik</button>
+                <button class="tab-btn" onclick="openTab(event, 'tap15')">Tap 15. Unit Pengaduan Usaha</button>
+                <button class="tab-btn" onclick="openTab(event, 'tap16')">Tap 16. Iklan Multiplatform</button>
+                <button class="tab-btn" onclick="openTab(event, 'tap17')">Tap 17. Surat Menyurat Online</button>
+                <button class="tab-btn" onclick="openTab(event, 'tap18')">Tap 18. Recruitment Reseller</button>
+                <button class="tab-btn" onclick="openTab(event, 'tap19')">Tap 19. Publikasi Live Streaming</button>
+                <button class="tab-btn" onclick="openTab(event, 'tap20')">Tap 20. Komunitas Pelanggan</button>
+            </div>
+
+            <!-- AREA ISI KONTEN KANAN -->
+            <div class="konten-kanan">
+                
+                <!-- TAP 1 -->
+                <div id="tap1" class="tab-content">
+                    <h2>Tap 1. Website Usaha Resmi</h2>
+                    <p style="margin-bottom:14px;"><strong>1. Tentang Bisnis:</strong> Platform digital penyewaan alat outdoor premium terpercaya di Labusel.</p>
+                    <p style="margin-bottom:14px;"><strong>2. Nama Usaha:</strong> Sewa Tenda Camping Labusel (TCL)</p>
+                    <p style="margin-bottom:14px;"><strong>3. Legalitas Usaha (NIB):</strong> 1908202512345</p>
+                    <p style="margin-bottom:14px;"><strong>4. Alamat Offline:</strong> Simpang Ranto Jior, Sungai Kanan, Labuhanbatu Selatan.</p>
+                </div>
+
+                <!-- TAP 2 -->
+                <div id="tap2" class="tab-content" style="display:none;">
+                    <h2>Tap 2. Linktree Pengelola</h2>
+                    <p>WhatsApp Utama Pengelola: <strong>0812-3332-8286</strong></p>
+                </div>
+
+                <!-- TAP 5: KATALOG -->
+                <div id="tap5" class="tab-content" style="display:none;">
+                    <h2>Tap 5. Katalog & List Perlengkapan Alat</h2>
+                    <div class="katalog-wrapper">
+                        <div class="katalog-main"><div class="grid-produk" id="containerProduk"></div></div>
+                        
+                        <!-- KASIR & FILTER DURATION -->
+                        <div class="kasir-side">
+                            <h3 style="color:#3D0C13; font-size:16px; margin-bottom:15px; font-family:'Playfair Display', serif; font-weight:700;">🛒 Keranjang Belanja</h3>
+                            
+                            <div class="grup-tanggal-rental">
+                                <label>Tanggal Pinjam / Mulai</label>
+                                <input type="date" id="tglMulai" onchange="hitungDurasiSewaMalam()">
+                                <label>Tanggal Pengembalian</label>
+                                <input type="date" id="tglSelesai" onchange="hitungDurasiSewaMalam()">
+                            </div>
+
+                            <div class="info-durasi-malam" id="labelDurasiMalam">Durasi: 0 Malam</div>
+
+                            <div id="keranjangKosong" style="font-size:12px; color:#888; margin-bottom: 15px;">Belum ada item dipilih.</div>
+                            <ul id="listKeranjang" style="font-size:13px; margin-bottom:15px; padding-left:15px; line-height:1.6; color:#4A3F3F;"></ul>
+                            
+                            <p style="font-weight:700; border-top:1px solid #EFEAE2; padding-top:10px; font-size:15px;">
+                                Total: Rp <span id="totalHargaText">0</span>
+                            </p>
+                            <button class="btn-maroon" id="btnCheckout" onclick="prosesSewaCheckout()" disabled>Pilih Tanggal Dahulu</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAP 5B: DETAIL PESANAN USER -->
+                <div id="pesananku-tab" class="tab-content" style="display:none;">
+                    <h2>📦 Tap 5b. Detail Pesanan Aktif Anda</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID Nota</th>
+                                <th>Item Alat (Kuantitas)</th>
+                                <th>Rentang Waktu Sewa</th>
+                                <th>Total Biaya</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bodyPesananKu">
+                            <tr><td colspan="5" style="text-align:center; color:#aaa; padding:25px;">Belum ada penyewaan aktif yang dibuat oleh user ini.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- TAP 6 -->
+                <div id="tap6" class="tab-content" style="display:none;">
+                    <h2>Tap 6. Dokumentasi Usaha (YouTube)</h2>
+                    <p>Channel Media Utama: Tenda Camping Labusel Channel</p>
+                </div>
+
+                <!-- TAP 7: PEMBAYARAN -->
+                <div id="tap7" class="tab-content" style="display:none;">
+                    <h2>Tap 7. Pembayaran Resmi Transaksi</h2>
+                    <p>Silakan lakukan transfer sesuai total transaksi Anda ke rekening resmi di bawah ini:</p>
+                    
+                    <div class="kotak-rekening-bri">
+                        <h4 style="color:#3D0C13; font-size:16px; margin-bottom:8px;">BANK BRI (Bank Rakyat Indonesia)</h4>
+                        <p style="font-size:18px; font-weight:800; color:#3D0C13; letter-spacing:1px; margin-bottom:6px;">5363-0102-4468-536</p>
+                        <p style="font-size:14px; color:#555;">Atas Nama: <strong>AIDIL MAHDI SULAIMAN HARAHAP</strong></p>
+                    </div>
+                    <p style="margin-top:15px; font-size:13px; color:#666; font-style:italic;">*Setelah melakukan pembayaran, mohon kirim bukti transfer ke WhatsApp Pengelola di Tap 2.</p>
+                </div>
+
+                <!-- TAP 8 -->
+                <div id="tap8" class="tab-content" style="display:none;">
+                    <h2>Tap 8. Google Map Profil</h2>
+                    <p>Alamat Gerai Fisik: Simpang Ranto Jior, Sungai Kanan, Labusel</p>
+                </div>
+
+                <!-- TAP 9: REKAP DAN DOKUMENTASI PEMBELIAN -->
+                <div id="tap9" class="tab-content" style="display:none;">
+                    <h2>📊 Tap 9. Rekap dan Dokumentasi Pembelian</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width:160px;">Foto Dokumentasi</th>
+                                <th>Nama Pemesan</th>
+                                <th>Alat yang Disewa</th>
+                                <th>Total Dana</th>
+                                <th>Status Pembayaran</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bodyRekapAdmin">
+                            <tr>
+                                <td style="text-align:center;">
+                                    <img src="images/dokumentasi1.jpeg" onerror="this.src='dokumentasi1.jpeg'" style="width:120px; height:120px; object-fit:cover; border-radius:12px; border: 2px solid #3D0C13;">
+                                </td>
+                                <td><strong>Rian Hidayat (KPA)</strong></td>
+                                <td>Tenda Max 4 Orang (2 Unit), Gas Portabel (1), Kompor Camping (1) - [1 Malam]</td>
+                                <td style="font-weight:700; color:#3D0C13;">Rp 120.000</td>
+                                <td style="color:green; font-weight:700;">LUNAS</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align:center;">
+                                    <img src="images/dokumentasi2.jpeg" onerror="this.src='dokumentasi2.jpeg'" style="width:120px; height:120px; object-fit:cover; border-radius:12px; border: 2px solid #3D0C13;">
+                                </td>
+                                <td><strong>Aidil Mahdi (User)</strong></td>
+                                <td>Tas Carrier 60L (1 Unit), Matras Spons (2 Unit) - [2 Malam]</td>
+                                <td style="font-weight:700; color:#3D0C13;">Rp 102.000</td>
+                                <td style="color:orange; font-weight:700;">PROSES CHECK</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align:center;">
+                                    <img src="images/dokumentasi3.jpeg" onerror="this.src='dokumentasi3.jpeg'" style="width:120px; height:120px; object-fit:cover; border-radius:12px; border: 2px solid #3D0C13;">
+                                </td>
+                                <td><strong>Budi Santoso</strong></td>
+                                <td>Tenda Max 6 Orang (1 Unit), Meja Lipat (1 Unit), Kursi Lipat (2 Unit) - [1 Malam]</td>
+                                <td style="font-weight:700; color:#3D0C13;">Rp 110.000</td>
+                                <td style="color:green; font-weight:700;">LUNAS</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align:center;">
+                                    <img src="images/dokumentasi4.jpeg" onerror="this.src='dokumentasi4.jpeg'" style="width:120px; height:120px; object-fit:cover; border-radius:12px; border: 2px solid #3D0C13;">
+                                </td>
+                                <td><strong>Siti Aminah</strong></td>
+                                <td>Nesting / Alat Masak (1 Unit), Teko Mini (1 Unit), Kompor Portable (1 Unit) - [2 Malam]</td>
+                                <td style="font-weight:700; color:#3D0C13;">Rp 90.000</td>
+                                <td style="color:green; font-weight:700;">LUNAS</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align:center;">
+                                    <img src="images/dokumentasi5.jpeg" onerror="this.src='dokumentasi5.jpeg'" style="width:120px; height:120px; object-fit:cover; border-radius:12px; border: 2px solid #3D0C13;">
+                                </td>
+                                <td><strong>Andi Wijaya</strong></td>
+                                <td>Tenda Max 2 Orang (1 Unit), Lampu LED Tenda (1 Unit), Senter Swat (1 Unit) - [1 Malam]</td>
+                                <td style="font-weight:700; color:#3D0C13;">Rp 51.000</td>
+                                <td style="color:red; font-weight:700;">BELUM BAYAR</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- ISI BACKUP TAB LAINNYA -->
+                <div id="tap3" class="tab-content" style="display:none;"><h2>Tap 3. Media Sosial Bisnis</h2><p>Instagram Official: @tendacampinglabusel</p></div>
+                <div id="tap4" class="tab-content" style="display:none;"><h2>Tap 4. Media Komunikasi</h2><p>Email Kantor: admin@tendacampinglabusel.com</p></div>
+                <div id="tap10" class="tab-content" style="display:none;"><h2>Tap 10. Kerjasama Usaha</h2><p>MoU resmi bersama Komunitas Pencinta Alam Sumatra Berpetualang.</p></div>
+                <div id="tap11" class="tab-content" style="display:none;"><h2>Tap 11. Promosi Pemasaran</h2><p>Penyebaran brosur & pamflet berkala di area luar ruangan.</p></div>
+                <div id="tap12" class="tab-content" style="display:none;"><h2>Tap 12. Aturan Usaha (Policy)</h2><p>Wajib meninggalkan kartu identitas asli (KTP/KTM).</p></div>
+                <div id="tap13" class="tab-content" style="display:none;"><h2>Tap 13. Pengiriman & E-Commerce</h2><p>Sistem pengantaran COD radius 5 KM gratis ongkir.</p></div>
+                <div id="tap14" class="tab-content" style="display:none;"><h2>Tap 14. Pengelola dan Pemilik</h2><p>Dikelola penuh oleh Tim Mahasiswa Manajemen Bissis Syariah.</p></div>
+                <div id="tap15" class="tab-content" style="display:none;"><h2>Tap 15. Unit Pengaduan Usaha</h2><p>Layanan tanggap keluhan pelanggan via call center 24 jam.</p></div>
+                <div id="tap16" class="tab-content" style="display:none;"><h2>Tap 16. Iklan Multiplatform</h2><p>Video promosi digital via TikTok Ads & Facebook Business Manager.</p></div>
+                <div id="tap17" class="tab-content" style="display:none;"><h2>Tap 17. Surat Menyurat Online</h2><p>Sistem invoice dan nota kesepakatan digital berformat PDF.</p></div>
+                <div id="tap18" class="tab-content" style="display:none;"><h2>Tap 18. Recruitment Reseller</h2><p>Peluang kemitraan reseller alat sewa dengan sistem komisi hasil.</p></div>
+                <div id="tap19" class="tab-content" style="display:none;"><h2>Tap 19. Publikasi Live Streaming</h2><p>Review unit berkala menggunakan fitur Live TikTok & Shopee.</p></div>
+                <div id="tap20" class="tab-content" style="display:none;"><h2>Tap 20. Komunitas Pelanggan</h2><p>Saluran komunikasi WhatsApp Group khusus pelanggan setia TCL.</p></div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const roleSekarang = localStorage.getItem('userRole') || 'Pelanggan'; 
+        const namaUserSekarang = localStorage.getItem('loggedInUser') || 'Konsumen Umum';
+        document.getElementById('userBadge').innerText = roleSekarang + " - " + namaUserSekarang;
+
+        // LOGIKA PENYEMBUNYIAN KODE DI SINI SUDAH DIHAPUS SUPAYA TAP 9 SELALU MUNCUL UNTUK SIAPAPUN
+
+        function openTab(evt, tabId) {
+            let i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) { tabcontent[i].style.display = "none"; }
+            
+            tablinks = document.getElementsByClassName("tab-btn");
+            for (i = 0; i < tablinks.length; i++) { tablinks[i].classList.remove("active"); }
+            
+            document.getElementById(tabId).style.display = "block";
+            
+            if (evt) {
+                evt.currentTarget.classList.add("active");
+            } else {
+                if(tabId === 'pesananku-tab') {
+                    document.getElementById('btnMenuPesananku').classList.add("active");
+                } else if(tabId === 'tap1') {
+                    document.getElementById('btn-tap1').classList.add("active");
+                }
+            }
+        }
+
+        let daftarProduk = [
+            {id: 1, nama: "Tenda Max 6 Orang", harga: 65000, gambar: "tendamax6.jpeg"},
+            {id: 2, nama: "Tenda Max 4 Orang", harga: 45000, gambar: "tendamax4.jpeg"},
+            {id: 3, nama: "Tenda Max 2 Orang", harga: 35000, gambar: "tendamax2.jpeg"},
+            {id: 4, nama: "Tracking Poll", harga: 15000, gambar: "trackingpoll.jpeg"},
+            {id: 5, nama: "Kompor Portable", harga: 15000, gambar: "kompor.jpeg"},
+            {id: 6, nama: "Senter Swat", harga: 8000, gambar: "senter.jpeg"},
+            {id: 7, nama: "Lampu LED Tenda", harga: 8000, gambar: "lampu.jpeg"},
+            {id: 8, nama: "Nesting / Alat Masak", harga: 20000, gambar: "nesting.jpeg"},
+            {id: 9, nama: "Teko Mini Outdoor", harga: 10000, gambar: "teko.jpeg"},
+            {id: 10, nama: "Kursi Lipat", harga: 15000, gambar: "kursilipat.jpeg"},
+            {id: 11, nama: "Meja Lipat", harga: 15000, gambar: "mejalipat.jpeg"},
+            {id: 12, nama: "Matras Spons", harga: 8000, gambar: "matras.jpeg"},
+            {id: 13, nama: "Gas Portabel Tabung", harga: 30000, gambar: "gas.jpeg"},
+            {id: 14, nama: "Tas Carrier 60L", harga: 35000, gambar: "tascarrier.jpeg"}
+        ];
+
+        let keranjangSewaMap = {};
+        let totalMalamSewa = 0;
+
+        function renderKatalog() {
+            const container = document.getElementById('containerProduk');
+            if(!container) return;
+            container.innerHTML = '';
+            daftarProduk.forEach((produk) => {
+                container.innerHTML += `
+                    <div class="card-produk">
+                        <img src="images/${produk.gambar}" onerror="this.src='images/logo.jpeg'" style="width:100%; height:110px; object-fit:cover; border-radius:12px;">
+                        <h4 style="margin:10px 0 4px 0; text-align:left;">${produk.nama}</h4>
+                        <div style="color:#2D2424; font-weight:800; font-size:12.5px; text-align:left; margin-bottom:10px;">Rp ${produk.harga.toLocaleString('id-ID')}/malam</div>
+                        <button class="btn-maroon" style="padding: 7px 12px; font-size:11px; margin-top:0;" onclick="tambahKeKeranjang(${produk.id})">+ Pilih</button>
+                    </div>
+                `;
+            });
+        }
+
+        function tambahKeKeranjang(id) {
+            if (keranjangSewaMap[id]) {
+                keranjangSewaMap[id].kuantitas += 1;
+            } else {
+                let produkAsli = daftarProduk.find(p => p.id === id);
+                keranjangSewaMap[id] = { ...produkAsli, kuantitas: 1 };
+            }
+            updateTampilanKeranjang();
+        }
+
+        function hitungDurasiSewaMalam() {
+            const tglMulaiVal = document.getElementById('tglMulai').value;
+            const tglSelesaiVal = document.getElementById('tglSelesai').value;
+            const labelDurasi = document.getElementById('labelDurasiMalam');
+            const btnCheckout = document.getElementById('btnCheckout');
+
+            if (!tglMulaiVal || !tglSelesaiVal) {
+                totalMalamSewa = 0;
+                labelDurasi.innerText = "Durasi: 0 Malam";
+                btnCheckout.disabled = true;
+                btnCheckout.innerText = "Pilih Tanggal Dahulu";
+                updateTampilanKeranjang();
+                return;
+            }
+
+            const d1 = new Date(tglMulaiVal);
+            const d2 = new Date(tglSelesaiVal);
+            
+            const selisihWaktu = d2.getTime() - d1.getTime();
+            const selisihHari = Math.ceil(selisihWaktu / (1000 * 3600 * 24));
+
+            if (selisihHari <= 0) {
+                alert("Tanggal pengembalian harus lebih besar dari tanggal mulai sewa!");
+                document.getElementById('tglSelesai').value = "";
+                totalMalamSewa = 0;
+                labelDurasi.innerText = "Durasi Salah";
+                btnCheckout.disabled = true;
+                updateTampilanKeranjang();
+                return;
+            }
+
+            totalMalamSewa = selisihHari;
+            labelDurasi.innerText = "Durasi: " + totalMalamSewa + " Malam";
+            cekValidasiTombolCheckout();
+            updateTampilanKeranjang();
+        }
+
+        function cekValidasiTombolCheckout() {
+            const btnCheckout = document.getElementById('btnCheckout');
+            let jumlahJenisBarang = Object.keys(keranjangSewaMap).length;
+
+            if (totalMalamSewa > 0 && jumlahJenisBarang > 0) {
+                btnCheckout.disabled = false;
+                btnCheckout.innerText = "Checkout & Buat Nota";
+            } else {
+                btnCheckout.disabled = true;
+                if (jumlahJenisBarang === 0) {
+                    btnCheckout.innerText = "Keranjang Masih Kosong";
+                } else {
+                    btnCheckout.innerText = "Pilih Tanggal Dahulu";
+                }
+            }
+        }
+
+        function updateTampilanKeranjang() {
+            const listContainer = document.getElementById('listKeranjang');
+            let keys = Object.keys(keranjangSewaMap);
+            
+            document.getElementById('keranjangKosong').style.display = keys.length === 0 ? 'block' : 'none';
+            listContainer.innerHTML = '';
+            
+            let totalSatuMalam = 0;
+            
+            keys.forEach((key) => {
+                let item = keranjangSewaMap[key];
+                totalSatuMalam += (item.harga * item.kuantitas);
+                listContainer.innerHTML += `
+                    <li style="margin-bottom:6px; display:flex; justify-content:space-between;">
+                        <span><strong>${item.nama}</strong> x${item.kuantitas}</span>
+                        <span style="color:#666;">Rp ${(item.harga * item.kuantitas).toLocaleString('id-ID')}</span>
+                    </li>`;
+            });
+
+            let totalHargaAkhir = totalSatuMalam * (totalMalamSewa > 0 ? totalMalamSewa : 1);
+            document.getElementById('totalHargaText').innerText = totalHargaAkhir.toLocaleString('id-ID');
+            
+            cekValidasiTombolCheckout();
+        }
+
+        function prosesSewaCheckout() {
+            let keys = Object.keys(keranjangSewaMap);
+            if(keys.length === 0) { alert('Keranjang kosong!'); return; }
+            if(totalMalamSewa <= 0) { alert('Silakan atur tanggal sewa terlebih dahulu!'); return; }
+
+            let idNota = "TCL-" + Math.floor(1000 + Math.random() * 9000);
+            let stringItemLengkap = keys.map(k => `${keranjangSewaMap[k].nama} (${keranjangSewaMap[k].kuantitas} Unit)`).join(', ');
+            
+            let tglAwal = document.getElementById('tglMulai').value;
+            let tglAkhir = document.getElementById('tglSelesai').value;
+            let rangeSewaString = `${tglAwal} s/d ${tglAkhir} (${totalMalamSewa} Malam)`;
+
+            let totalSatuMalam = keys.reduce((acc, k) => acc + (keranjangSewaMap[k].harga * keranjangSewaMap[k].kuantitas), 0);
+            let totalBiayaFinal = totalSatuMalam * totalMalamSewa;
+
+            document.getElementById('bodyPesananKu').innerHTML = `
+                <tr>
+                    <td><strong>${idNota}</strong></td>
+                    <td>${stringItemLengkap}</td>
+                    <td><small>${rangeSewaString}</small></td>
+                    <td style="color:#3D0C13; font-weight:700;">Rp ${totalBiayaFinal.toLocaleString('id-ID')}</td>
+                    <td style="color:orange; font-weight:700;">DIPROSES</td>
+                </tr>
+            `;
+
+            alert(`Pemesanan Berhasil!\nTotal Durasi: ${totalMalamSewa} Malam.\nSilakan cek detail pada Tap 5b.`);
+            
+            keranjangSewaMap = {};
+            totalMalamSewa = 0;
+            document.getElementById('tglMulai').value = "";
+            document.getElementById('tglSelesai').value = "";
+            document.getElementById('labelDurasiMalam').innerText = "Durasi: 0 Malam";
+            
+            updateTampilanKeranjang();
+            openTab(null, 'pesananku-tab');
+        }
+
+        window.onload = function() {
+            renderKatalog();
+            openTab(null, 'tap1');
+        };
+    </script>
+</body>
+</html>
