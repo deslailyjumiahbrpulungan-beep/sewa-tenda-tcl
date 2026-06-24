@@ -1,0 +1,321 @@
+:root {
+    --maroon-main: #601A24;
+    --maroon-dark: #3D0C13;
+    --cream-bg: #FFFDF9;
+    --cream-dark: #D9B48F;
+    --text-main: #2D2525;
+    --white: #ffffff;
+    --shadow-soft: 0 10px 30px rgba(96, 26, 36, 0.05);
+    --shadow-card: 0 5px 15px rgba(0, 0, 0, 0.04);
+    --radius-lg: 16px;
+    --radius-md: 12px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+body {
+    background-color: #FBF9F6;
+    color: var(--text-main);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.navbar {
+    background: linear-gradient(135deg, var(--maroon-main), var(--maroon-dark));
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.navbar-brand img {
+    height: 42px;
+    width: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--cream-dark);
+}
+
+.logout-btn {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    padding: 8px 18px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.logout-btn:hover {
+    background: white;
+    color: var(--maroon-main);
+}
+
+.main-container {
+    display: flex;
+    flex: 1;
+}
+
+.sidebar {
+    width: 320px;
+    background: var(--white);
+    border-right: 1px solid #F0EAE1;
+    padding: 25px 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    max-height: calc(100vh - 72px);
+    overflow-y: auto;
+}
+
+.tab-btn {
+    background: none;
+    border: none;
+    text-align: left;
+    padding: 12px 16px;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: #665E5E;
+    cursor: pointer;
+    border-radius: var(--radius-md);
+    transition: all 0.2s ease;
+}
+
+.tab-btn:hover {
+    background: #F7F3ED;
+    color: var(--maroon-main);
+}
+
+.tab-btn.active {
+    background: rgba(96, 26, 36, 0.08);
+    color: var(--maroon-main);
+    font-weight: 600;
+    border-left: 4px solid var(--maroon-main);
+}
+
+.content-area {
+    flex: 1;
+    padding: 40px;
+    max-height: calc(100vh - 72px);
+    overflow-y: auto;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+    animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.welcome-hero {
+    background: linear-gradient(135deg, #4A1119 0%, #29050A 100%);
+    color: #FFFDF9;
+    padding: 40px;
+    border-radius: var(--radius-lg);
+    margin-bottom: 35px;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    box-shadow: var(--shadow-soft);
+    border-left: 6px solid var(--cream-dark);
+}
+
+.welcome-hero img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--cream-dark);
+    background: white;
+}
+
+.motto-tag {
+    display: inline-block;
+    background: rgba(217, 180, 143, 0.2);
+    color: var(--cream-dark);
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+}
+
+.card-box {
+    background: var(--white);
+    padding: 30px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-soft);
+    border: 1px solid #F0EAE1;
+    margin-bottom: 25px;
+}
+
+.card-box h2 {
+    font-size: 20px;
+    color: var(--maroon-main);
+    margin-bottom: 20px;
+    font-weight: 700;
+    border-bottom: 2px solid #F7F3ED;
+    padding-bottom: 10px;
+}
+
+.katalog-wrapper {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+}
+
+.katalog-main {
+    flex: 2;
+}
+
+.admin-actions {
+    background: #F7F3ED;
+    padding: 20px;
+    border-radius: var(--radius-md);
+    margin-bottom: 25px;
+    border: 1px dashed var(--cream-dark);
+}
+
+.grid-produk {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.card-produk {
+    background: var(--white);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+    border: 1px solid #F0EAE1;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-produk img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+.card-body {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.card-body h4 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text-main);
+    height: 40px;
+    overflow: hidden;
+}
+
+.card-body .harga {
+    color: var(--maroon-main);
+    font-weight: 700;
+    font-size: 15px;
+    margin-bottom: 15px;
+}
+
+.btn-action {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+}
+
+.btn-add-cart {
+    background: var(--maroon-main);
+    color: white;
+}
+
+.btn-edit { background: #E6A23C; color: white; margin-top: 5px; }
+.btn-delete { background: #F56C6C; color: white; margin-top: 5px; }
+
+.form-control {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid #DCD6CD;
+    margin-bottom: 12px;
+    font-size: 13px;
+}
+
+.btn-primary {
+    background: var(--maroon-main);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.kasir-side {
+    flex: 1;
+    background: var(--white);
+    padding: 25px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-soft);
+    border: 1px solid #F0EAE1;
+    position: sticky;
+    top: 90px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    font-size: 13px;
+}
+
+th {
+    background: #F7F3ED;
+    color: var(--maroon-main);
+    text-align: left;
+    padding: 12px;
+    border-bottom: 2px solid #EAE3D8;
+}
+
+td {
+    padding: 12px;
+    border-bottom: 1px solid #F0EAE1;
+    vertical-align: middle;
+}

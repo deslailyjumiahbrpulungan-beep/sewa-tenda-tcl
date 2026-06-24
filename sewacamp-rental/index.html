@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sewa Tenda Camping Labusel (TCL) - Masuk Aplikasi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .login-body {
+            background: linear-gradient(135deg, #1f0509 0%, #3D0C13 50%, #601A24 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .login-card {
+            background: #ffffff;
+            width: 100%;
+            max-width: 450px;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            border-top: 5px solid var(--cream-dark);
+        }
+        .login-card img {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--maroon-main);
+            margin-bottom: 15px;
+            background-color: white;
+        }
+        .login-card h2 { color: var(--maroon-main); font-size: 22px; font-weight: 700; margin-bottom: 5px; }
+        .login-card p { color: #777; font-size: 13px; margin-bottom: 25px; }
+        .form-group { text-align: left; margin-bottom: 18px; }
+        .form-group label { display: block; font-size: 12.5px; font-weight: 600; color: var(--text-main); margin-bottom: 6px; }
+        .select-control {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid #DCD6CD;
+            background-color: #fff;
+            font-size: 13px;
+        }
+        .login-btn {
+            width: 100%;
+            background: linear-gradient(135deg, var(--maroon-main), var(--maroon-dark));
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(96, 26, 36, 0.2);
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body class="login-body">
+
+    <div class="login-card">
+        <img src="images/logo.jpeg" onerror="this.src='logo.jpeg'" alt="Logo TCL">
+        <h2>E-Business Portal TCL</h2>
+        <p>Sewa Tenda Camping Labuhanbatu Selatan</p>
+
+        <form id="formLoginSederhana">
+            <div class="form-group">
+                <label>Pilih Hak Akses Masuk</label>
+                <select id="pilihanRole" class="select-control" onchange="sesuaikanHint()">
+                    <option value="Pelanggan">Pelanggan / Konsumen Umum</option>
+                    <option value="Admin">Admin / Pemilik Usaha</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Nama Pengguna (Username)</label>
+                <input type="text" id="logUsername" class="form-control" placeholder="Masukkan nama/username..." required>
+            </div>
+
+            <div class="form-group" id="boxPassword">
+                <label>Kata Sandi (Password)</label>
+                <input type="password" id="logPassword" class="form-control" placeholder="Masukkan password...">
+            </div>
+
+            <button type="submit" class="login-btn">Masuk Sistem Dashboard</button>
+        </form>
+    </div>
+
+    <script>
+        function sesuaikanHint() {
+            const role = document.getElementById('pilihanRole').value;
+            const uInput = document.getElementById('logUsername');
+            if(role === 'Admin') {
+                uInput.value = 'admin';
+                document.getElementById('logPassword').value = 'admin123';
+            } else {
+                uInput.value = '';
+                document.getElementById('logPassword').value = '';
+            }
+        }
+
+        document.getElementById('formLoginSederhana').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const roleTerpilih = document.getElementById('pilihanRole').value;
+            const username = document.getElementById('logUsername').value.trim();
+            const password = document.getElementById('logPassword').value;
+
+            if (roleTerpilih === 'Admin') {
+                if (username.toLowerCase() === 'admin' && password === 'admin123') {
+                    localStorage.setItem('userRole', 'Admin');
+                    localStorage.setItem('loggedInUser', 'Pemilik TCL (Admin)');
+                    alert('Login Pemilik Berhasil! Membuka data rekap dokumentasi dan inventaris.');
+                    window.location.href = 'dashboard.html';
+                } else {
+                    alert('Password salah! Khusus akun pemilik/admin password-nya: admin123');
+                }
+            } else {
+                localStorage.setItem('userRole', 'Pelanggan');
+                localStorage.setItem('loggedInUser', username || 'Pelanggan_Mulia');
+                alert('Login Pelanggan Berhasil! Selamat berbelanja.');
+                window.location.href = 'dashboard.html';
+            }
+        });
+    </script>
+</body>
+</html>
